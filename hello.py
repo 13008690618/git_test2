@@ -8,3 +8,5 @@ ptint('后天是星期3')
 print('aaaaaaaaaaaaaaaaaaaaa')
 
 print('eeeeeeeeeeeeeeeeeeee')
+
+print('我是小明')
