@@ -4,3 +4,6 @@ print('xxxxxx')
 print('明天是星期3')
 def fun1_wim(x):
 	print(x)
+
+def fun2_win(x):
+	return x+1
