@@ -1,4 +1,6 @@
 print('aaaaaaaaaaaaaaaaaaaaa')
 
-print('win是最帅的')
+print('ubu很ok')
 
+
+print(昨天是星期5)
