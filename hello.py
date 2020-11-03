@@ -7,3 +7,6 @@ def fun1_wim(x):
 
 def fun2_win(x):
 	return x+1
+
+def f1_ubu(x):
+	return "my name is ubu"
