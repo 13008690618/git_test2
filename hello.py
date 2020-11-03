@@ -1,4 +1,4 @@
 print('aaaaaaaaaaaaaaaaaaaaa')
 print('ubu很ok')
-print('今天是星期2')
+print('xxxxxx')
 print('明天是星期3')
