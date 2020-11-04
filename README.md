@@ -1,6 +1,6 @@
 # git_test2
-学习git使用。
-1.建立数据库,我是win
+学习git使用。我是centos
+1.建立数据库
 	创建类型：
 	create type data_type as enum ('news','transcript');
 	创建数据库表：
