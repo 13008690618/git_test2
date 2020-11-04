@@ -15,12 +15,14 @@ class PgSql:
     def connection(self,db_name):
         self.conn = psycopg2.connect(database=db_name, user=self.user, password=self.password, host=self.host,port=self.port)
 
+
     '''Checks whether the database is connected
         the function will return true if connected db;
         otherwith return flase  
     '''
     def detection(self):
         return self.conn != None
+
 
     '''
     to execute sql
@@ -34,6 +36,7 @@ class PgSql:
             self.conn.commit()  #commit
             self.conn.close()   #colse
 
+
     '''create a table on database
         Amg:
             db_name : The database in
@@ -46,8 +49,8 @@ class PgSql:
         sql = '''create table "%s"(%s);''' % (table_name, reduce(lambda x,y:x+(','+y), structure))
         self.execute_sql(sql)
         print('create {} successful!'.format(table_name))
-            
 
+            
     '''Get table name from databases
     Amg:
         db_name:set a database
@@ -61,4 +64,5 @@ class PgSql:
         table_name_list = list(map(lambda x:x[1], cur.fetchall()))
         self.conn.close()
         self.conn = None
+        
         return table_name_list
