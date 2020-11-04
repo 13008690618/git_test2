@@ -1,5 +1,5 @@
 # git_test2
-测试ssh的使用
+学习git使用。
 1.建立数据库
 	创建类型：
 	create type data_type as enum ('news','transcript');
@@ -11,5 +11,8 @@
 	'type data_type not null',
 	'date timestamp not null',
 	注意：postgresql没有自增设置：其中serial(序号类型)搭配not null就是自增
+
+2、将数据录入数据库
+	解析数据
 	
 
