@@ -12,7 +12,4 @@
 	'date timestamp not null',
 	注意：postgresql没有自增设置：其中serial(序号类型)搭配not null就是自增
 
-2、将数据录入数据库
-	解析数据
-	
-
+2.解析news数据
