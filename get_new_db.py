@@ -1,11 +1,11 @@
-#录入news
+# -*- coding: UTF-8 -*- 
 import re
 import os
 import gzip
-import postgresql_tool
-import xml.dom.minidom
+from PostgreSQL import *
 from xml.etree import ElementTree as ET
-import psycopg2
+
+pgsql = PgSql() #Init the databases
 
 
 #***************************************解析****************************************
@@ -47,7 +47,7 @@ def read_data(path):
             #插入数据库（不一定要做匹配，try就行）
             for table_name in USorHK_list:
                 try:
-                    postgresql_tool.insert_into_news(table_name, title, text, source, 'news', date_, 'ch')
+                    pgsql.insert_into_db('dbnews_china', table_name.lower(), field_list=['title','text','source','type','date'], value_list=[title, text, source, 'news', date_])
                 except:
                     pass
         except:
@@ -63,7 +63,7 @@ def FileList(dir_path='data'):
 
 if __name__ == "__main__":
     #dir_path = '/home/ubuntu/wind/__DATA__/FinancialNews'  #第一批
-    dir_path = '/home/ubuntu/simon/FinancialNews'  #第二批
+    dir_path = '/home/DATA/FinancialNews'  #第二批
 
     file_list = FileList(dir_path)
 

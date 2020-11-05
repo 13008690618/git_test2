@@ -11,9 +11,13 @@ pgsql = PgSql()	#Init the databases
 
 '''parsing Product Element'''
 def parse_product(product):
-  x = product.findall('OBJECT_ID')[0].text
+  #table = product.findall('')[0].text
+  title = product.findall('OBJECT_ID')[0].text
+  text = product.findall('S_EVENT_CONTENT')[0].text
+  source = 'AShareMajorEvent'
+  date = product.findall('OPDATE')[0].text
 
-  return x
+  return [title, text, source, 'news', date]
 
 
 '''parsing xml'''
@@ -25,10 +29,10 @@ def parse_xml(xml_file):
     try:
       x = parse_product(product)
       #make data to database
-      print(x)
+      pgsql.insert_into_db('dbnews_china', '27', field_list=['title','text','source','type','date'], value_list=x)
     except:
       pass
-    break#解除
+    
 
 '''Get the file name under the folder'''
 def FileList(dir_path):
@@ -37,7 +41,7 @@ def FileList(dir_path):
 
 
 if __name__ == '__main__':
-  dir_path = "/home/ubuntu/wind/__DATA__/AShareMajorEvent/"
+  dir_path = "/home/DATA/AShareMajorEvent/"
   for file in FileList(dir_path):
     parse_xml(dir_path+file)
-    break#解除
+    

@@ -1,6 +1,5 @@
-#postgresql数据库API开发
+# -*- coding: UTF-8 -*- 
 import psycopg2
-import nump
 from functools import reduce
 
 class PgSql:
@@ -37,7 +36,6 @@ class PgSql:
             self.conn.commit()  #commit
             self.conn.close()   #colse
 
-
     '''create a table on database
         Amg:
             db_name : The database in
@@ -68,6 +66,16 @@ class PgSql:
         
         return table_name_list
 
+    '''
+    Text may contains quotation marks that cause SQL error, use this to remove them
+    '''
+    def remove_quotation_marks(self,text):
+        if "'" in text:
+            return text.replace("'", "''")
+        else:
+            return text
+
+
     '''Insert data to databases(dbnews_china or db_english)
     Args:
         db_name:The database of accepts
@@ -75,15 +83,26 @@ class PgSql:
         field_list: eg：['title', 'text', 'source', 'type', 'date']
         value_list:
     '''
-    def insert_into_db(self，db_name, table_name, field_list, value_list):
-        #self.connection(db_name)    #connected to dataabse
-        #
+    def insert_into_db(self,db_name, table_name, field_list, value_list):
+        value_list = list(map(self.remove_quotation_marks, value_list))  #make ' to "''"
+        self.connection(db_name)    #connected to dataabse
         if len(field_list) != len(value_list):
             print('The quantities of Field and Value are not equal！')
             return
+        if self.get_row_count_criteria(db_name, table_name, value_list[0], value_list[-1]) != 0:
+            return
 
-        sql_ = reduce(lambda x,y:x+(','+y), field_list)
-        print(sql_)
-        #sql = '''insert into "%s" (title, text, source, type, date) values ('%s', '%s', '%s', '%s', '%s');''' % (table, title, text, source, type, date)
-        #self.execute_sql(sql)
-        pass
+        s1 = reduce(lambda x,y:x+(' ,'+y), field_list)
+        s2 = "'"+reduce(lambda x,y:str(x)+("','"+str(y)), value_list)+"'"
+        sql = '''insert into "%s" (%s) values (%s);''' % (table_name, s1, s2)
+        self.execute_sql(sql)
+
+    '''
+    Gets the number of rows in a table in the database based on the title&date
+    '''
+    def get_row_count_criteria(self, db_name, table_name, title, date):
+        self.connection(db_name)    #connected to dataabse
+        cursor = self.conn.cursor()
+        cursor.execute('''select count(*) from "%s" where title = '%s' and date = '%s';''' % (table_name, self.remove_quotation_marks(title), self.remove_quotation_marks(date)))
+        rows = cursor.fetchall()
+        return rows[0][0]
