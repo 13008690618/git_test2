@@ -13,4 +13,5 @@
 	注意：postgresql没有自增设置：其中serial(序号类型)搭配not null就是自增
 
 2.解析news数据
-	我是centos
+	我是win
+	我是win

@@ -1,5 +1,6 @@
 #postgresql数据库API开发
 import psycopg2
+import nump
 from functools import reduce
 
 class PgSql:
@@ -13,7 +14,7 @@ class PgSql:
 
     '''connectin to database'''
     def connection(self,db_name):
-        self.conn = psycopg2.connect(database=db_name, user=self.user, password=self.password, host=self.host,port=self.port)
+        self.conn = psycopg2.connect(database=db_name, user=self.user, password=self.password, host=self.host, port=self.port)
 
 
     '''Checks whether the database is connected
@@ -66,3 +67,23 @@ class PgSql:
         self.conn = None
         
         return table_name_list
+
+    '''Insert data to databases(dbnews_china or db_english)
+    Args:
+        db_name:The database of accepts
+        table_name: the data insert in to
+        field_list: eg：['title', 'text', 'source', 'type', 'date']
+        value_list:
+    '''
+    def insert_into_db(self，db_name, table_name, field_list, value_list):
+        #self.connection(db_name)    #connected to dataabse
+        #
+        if len(field_list) != len(value_list):
+            print('The quantities of Field and Value are not equal！')
+            return
+
+        sql_ = reduce(lambda x,y:x+(','+y), field_list)
+        print(sql_)
+        #sql = '''insert into "%s" (title, text, source, type, date) values ('%s', '%s', '%s', '%s', '%s');''' % (table, title, text, source, type, date)
+        #self.execute_sql(sql)
+        pass
